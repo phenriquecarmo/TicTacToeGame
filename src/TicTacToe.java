@@ -23,10 +23,6 @@ public class TicTacToe {
             }
             printBoard(board);
         }
-
-
-
-      //  printBoard(board);
     }
 
     private static void computerMove(char[][] board, int position) {
