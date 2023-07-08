@@ -1,8 +1,33 @@
 import java.util.Random;
 import java.util.Scanner;
 
+/* Better code to:
+    should ask at the end if player wants to play again
+*/
+
 public class TicTacToe {
     public static void main(String[] args) {
+
+        playGame();
+
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Do you want to play again? (y/n)");
+            String playAgain = scanner.nextLine();
+
+            if (playAgain.equalsIgnoreCase("N")) {
+                break;
+            } else if (playAgain.equalsIgnoreCase("Y")){
+                playGame();
+            } else {
+                System.out.println("Invalid Input! Closing the game");
+                break;
+            }
+        }
+
+    }
+
+    private static void playGame() {
         char[][] board = {
                 {' ', ' ', ' '},
                 {' ', ' ', ' '},
@@ -10,7 +35,6 @@ public class TicTacToe {
         };
 
         printBoard(board);
-
         while (true) {
             playerMove(board); // Player move
             printBoard(board);
@@ -21,6 +45,7 @@ public class TicTacToe {
             if (isGameFinished(board)) {
                 break;
             }
+
             printBoard(board);
         }
     }
@@ -41,7 +66,10 @@ public class TicTacToe {
             System.out.println("Where would you like to play? (1-9)");
             placeNumber = scanner.nextLine();
             try {
-                if (isSpaceAvailable(board, Integer.parseInt(placeNumber))) {
+                if (Integer.parseInt(placeNumber) < 1 || Integer.parseInt(placeNumber) > 9) {
+                    System.out.println("Please type a number between 1 and 9");
+                }
+                else if (isSpaceAvailable(board, Integer.parseInt(placeNumber))) {
                     break;
                 } else {
                     System.out.println(placeNumber + " is already occupied!");
@@ -87,7 +115,7 @@ public class TicTacToe {
             return true;
         }
 
-        if (hasContestantWon(board, '0')) { // The code is not working to get computer wins, try to understand why
+        if (hasContestantWon(board, '0')) {
             printBoard(board);
             System.out.println("Computer Wins!");
             return true;
